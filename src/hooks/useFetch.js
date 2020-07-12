@@ -15,9 +15,9 @@ export const useFetch = url => {
       .then(x => x.text())
       .then(y => {
         setTimeout(() => {
-          // if(isCurrent.current) {
+          if(isCurrent.current) {
             setData(y)
-          // }
+          }
         }, 2000)
       })
   }, [url, setData])
