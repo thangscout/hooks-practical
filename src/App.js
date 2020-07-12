@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 
-import useForm from "./hooks/useForm";
+import { useForm } from "./hooks/useForm";
+import { useMeasure } from "./hooks/useMeasure";
 
 import { Home } from "./components/Home";
 
@@ -12,16 +13,17 @@ const App = () => {
     password: "",
   });
 
-  const [showHome, setShowHome] = useState(false);
+  const [showHome, setShowHome] = useState(true);
   const inputRef = useRef();
 
+  const [rect, inputRef2] = useMeasure([]);
 
   return (
     <>
       <h1>Hooks Practical</h1>
       <button onClick={() => setShowHome(!showHome)}>Toggle</button>
-      {showHome && <Home/>}
-      <hr/>
+      {showHome && <Home />}
+      <hr />
       <div>
         <div>
           <label htmlFor="firstName">First name:</label>
@@ -38,6 +40,7 @@ const App = () => {
         <div>
           <label htmlFor="lastName">Last name:</label>
           <input
+            ref={inputRef2}
             id="lastName"
             type="text"
             name="lastName"
@@ -45,6 +48,7 @@ const App = () => {
             onChange={handleChange}
           />
         </div>
+        <pre>{JSON.stringify(rect, null, 2)}</pre>
         <br />
         <div>
           <label htmlFor="email">Email:</label>
@@ -68,9 +72,7 @@ const App = () => {
           />
         </div>
 
-        <button onClick={() => inputRef.current.focus()}>
-          Focus
-        </button>
+        <button onClick={() => inputRef.current.focus()}>Focus</button>
       </div>
     </>
   );
