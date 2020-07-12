@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import useForm from "./hooks/useForm";
+import { useFetch } from "./hooks/useFetch";
 
 const App = () => {
   const [values, handleChange] = useForm({
@@ -10,9 +11,23 @@ const App = () => {
     password: "",
   });
 
+  const [count, setCount] = useState(() =>
+    JSON.parse(localStorage.getItem("count"))
+  );
+  const data = useFetch(`http://numbersapi.com/${count}/trivia`);
+
+  useEffect(() => {
+    localStorage.setItem("count", JSON.stringify(count));
+  }, [count]);
+
   return (
     <>
       <h1>Hooks Practical</h1>
+      {!data ? "Loading..." : <h2>{data}</h2>}
+      <div>Count: {count}</div>
+      <button onClick={() => setCount((c) => c + 1)}>Increment</button>
+      <br />
+      <br />
       <div>
         <div>
           <label htmlFor="firstName">First name:</label>
@@ -24,7 +39,7 @@ const App = () => {
             onChange={handleChange}
           />
         </div>
-        <br/>
+        <br />
         <div>
           <label htmlFor="lastName">Last name:</label>
           <input
@@ -35,7 +50,7 @@ const App = () => {
             onChange={handleChange}
           />
         </div>
-        <br/>
+        <br />
         <div>
           <label htmlFor="email">Email:</label>
           <input
@@ -46,7 +61,7 @@ const App = () => {
             onChange={handleChange}
           />
         </div>
-        <br/>
+        <br />
         <div>
           <label htmlFor="password">Password</label>
           <input
