@@ -1,9 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback } from "react";
 
 import { useForm } from "./hooks/useForm";
 import { useMeasure } from "./hooks/useMeasure";
 
 import { Home } from "./components/Home";
+import { Hello } from "./components/Hello";
 
 const App = () => {
   const [values, handleChange] = useForm({
@@ -17,6 +18,12 @@ const App = () => {
   const inputRef = useRef();
 
   const [rect, inputRef2] = useMeasure([]);
+
+  const [count2, setCount2] = useState(0);
+
+  const increment = useCallback((n) => {
+    setCount2(c => c + n)
+  }, [setCount2]);
 
   return (
     <>
@@ -73,6 +80,12 @@ const App = () => {
         </div>
 
         <button onClick={() => inputRef.current.focus()}>Focus</button>
+      </div>
+      <hr/>
+      <h2>React.memo</h2>
+      <div>
+        <Hello increment={increment}/>
+        <div>Count2: {count2}</div>
       </div>
     </>
   );
