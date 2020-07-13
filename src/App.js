@@ -5,6 +5,7 @@ import { useMeasure } from "./hooks/useMeasure";
 
 import { Home } from "./components/Home";
 import { Hello } from "./components/Hello";
+import { Square } from "./components/Square";
 
 const App = () => {
   const [values, handleChange] = useForm({
@@ -20,6 +21,7 @@ const App = () => {
   const [rect, inputRef2] = useMeasure([]);
 
   const [count2, setCount2] = useState(0);
+  const favoriteNums = [7, 21, 37];
 
   const increment = useCallback((n) => {
     setCount2(c => c + n)
@@ -86,6 +88,11 @@ const App = () => {
       <div>
         <Hello increment={increment}/>
         <div>Count2: {count2}</div>
+        {favoriteNums.map(n => {
+          return (
+            <Square increment={increment} n={n} key={n }/>
+          )
+        })}
       </div>
     </>
   );
